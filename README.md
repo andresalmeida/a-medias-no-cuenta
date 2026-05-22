@@ -1,271 +1,182 @@
 # A medias no cuenta
-## Transición alimentaria, diabetes y el vacío del Estado en el campo ecuatoriano
+### Transición alimentaria, diabetes y el vacío del Estado en el campo ecuatoriano
 
-Historia de datos desarrollada como proyecto final del bootcamp del **Observatorio Al Dato**, en colaboración con **Fundación Datalat** e **Indeciencia**.
+Historia de datos desarrollada como proyecto final del bootcamp del **Observatorio Al Dato**, en colaboración con **Fundación Datalat** e **Indeciencia** — mayo 2026.
 
-El proyecto investiga una pregunta incómoda y concreta: **qué ocurre cuando la modernización alimentaria llega al campo antes que la atención sanitaria**. A partir de datos abiertos de salud, mortalidad, pobreza y compras públicas, la historia muestra cómo la diabetes avanzó en provincias con alta ruralidad mientras la respuesta estatal en insulina fue desigual, tardía o insuficiente.
+El proyecto investiga una pregunta concreta: **¿qué ocurre cuando la modernización alimentaria llega al campo antes que la atención sanitaria?** A partir de datos abiertos de mortalidad, compras públicas, pobreza y nutrición, muestra cómo la diabetes creció en provincias rurales ecuatorianas mientras la respuesta estatal en insulina fue desigual, tardía o insuficiente.
+
+---
 
 ## La tesis
 
-> La modernización entró al campo como consumo mucho antes de entrar como cuidado.
+> *La modernización entró al campo como consumo mucho antes de entrar como cuidado.*
 
-La hipótesis central del proyecto es que amplias zonas rurales del Ecuador incorporaron patrones de vida urbana —más ultraprocesados, más sedentarismo, más exposición al riesgo metabólico— sin que el Estado expandiera su presencia sanitaria al mismo ritmo. El resultado fue una brecha visible entre carga de enfermedad y capacidad de respuesta pública.
+Las comunidades rurales ecuatorianas incorporaron patrones de vida urbana —ultraprocesados, sedentarismo, riesgo metabólico— sin que el Estado expandiera su presencia sanitaria al mismo ritmo. El resultado: una brecha visible entre carga de enfermedad y capacidad de respuesta pública.
 
-## Qué contiene este repositorio
-
-Este repositorio reúne dos capas del proyecto:
-
-- `data/`: limpieza, estandarización y cruces analíticos.
-- `web/`: historia scrolleable desarrollada en React + D3.
-
-No es solo una visualización. Es un proyecto de análisis reproducible con una pieza editorial pública encima.
-
-Repositorio: [andresalmeida/a-medias-no-cuenta](https://github.com/andresalmeida/a-medias-no-cuenta)
-
-## Preguntas que guía la investigación
-
-El proyecto se organiza alrededor de cuatro preguntas:
-
-1. ¿Qué señales tempranas había de transición alimentaria en el campo ecuatoriano?
-2. ¿Qué pasó con la mortalidad por diabetes cuando la enfermedad empezó a crecer?
-3. ¿La compra pública de insulina siguió el mapa de la necesidad?
-4. ¿Hay provincias donde el patrón esperado entre pobreza y mortalidad no se comporta igual?
-
-## Fuentes de datos
-
-### 1. ENSANUT 2018
-Fuente: Encuesta Nacional de Salud y Nutrición.
-
-Se usa para:
-
-- prevalencia ponderada de sobrepeso y obesidad en adultos rurales;
-- variables de riesgo asociadas a dieta y transición alimentaria;
-- contexto narrativo sobre el cambio en hábitos alimentarios.
-
-Hallazgo metodológico importante:
-
-- ENSANUT 2018 **no incluyó biomarcadores de glucosa** comparables con la edición anterior.
-- El dato de glucosa elevada en ayunas (`7,1%`) proviene de **STEPS 2018 del MSP**, disponible como cifra agregada y no como microdato público.
-
-### 2. Defunciones Generales INEC 2019–2024
-Fuente: Registro Estadístico de Defunciones Generales.
-
-Se usa para:
-
-- filtrar muertes por diabetes (`CIE-10 E10–E14`);
-- construir series nacionales;
-- agregar mortalidad por provincia;
-- analizar el desplazamiento rural → urbano al morir.
-
-### 3. Censo 2022
-Fuente: INEC.
-
-Se usa para:
-
-- población provincial como denominador de estandarización;
-- porcentaje de hogares/personas con NBI;
-- autoidentificación étnica por provincia.
-
-### 4. SERCOP 2015–2024
-Fuente: API de compras públicas.
-
-Se usa para:
-
-- consolidar compras públicas de insulina;
-- agregar montos por provincia y por año;
-- comparar inversión pública con mortalidad.
-
-## Metodología
-
-### Unidad de análisis
-
-El análisis final se sostiene a nivel **provincial**.
-
-Esto no fue una preferencia estética sino una decisión metodológica:
-
-- los microdatos de defunciones no traen una residencia subprovincial confiable y homogénea;
-- bajar a cantón o parroquia habría introducido sesgos fuertes hacia lugares de fallecimiento y no necesariamente de residencia;
-- por eso la escala defendible del proyecto es provincia.
-
-En otras palabras: se prefirió una escala provincial **metodológicamente defendible** antes que una granularidad aparente pero engañosa.
-
-### Estandarización
-
-Cada fuente trabaja en unidades distintas:
-
-- INEC: muertes absolutas
-- SERCOP: montos absolutos en USD
-- Censo: población y NBI
-
-Para volver comparables los cruces territoriales se usó población del Censo 2022 como denominador:
-
-```text
-tasa_mortalidad_100k = (muertes / población_provincia) * 100000
-insulina_usd_per_capita = monto_insulina / población_provincia
-```
-
-### Lenguaje inferencial
-
-El proyecto evita sobreactuar relaciones estadísticas.
-
-En el cruce entre pobreza (NBI) y mortalidad por diabetes:
-
-- Spearman: `r = -0,36`, `p = 0,082`
-- OLS: `p = 0,187`, `R² = 0,078`
-
-Por eso los resultados se comunican como **tendencias sugerentes**, no como prueba concluyente ni como rechazo formal de hipótesis nula.
+---
 
 ## Hallazgos principales
 
-### 1. La transición alimentaria ya estaba instalada
+**1. La transición alimentaria ya estaba instalada**
+En 2018, el **62%** de los adultos rurales vivía con sobrepeso u obesidad (ENSANUT 2018, ponderado con factor de expansión `fexp`). El riesgo ya no era exclusivamente urbano.
 
-En 2018, el `62%` de los adultos rurales vivía con sobrepeso u obesidad. El problema ya no era exclusivamente urbano.
+**2. El Estado dejó de medir justo cuando más lo necesitaba**
+La ENSANUT 2018 no incluyó biomarcadores públicos de glucosa, a diferencia de la edición 2012. El único dato disponible de prevalencia directa —7,1% de adultos con glucosa elevada en ayunas— proviene del módulo STEPS 2018 del MSP, publicado solo como informe PDF, sin microdato. Cuando la enfermedad crecía, el instrumento de medición retrocedió.
 
-### 2. El Estado dejó de medir justo cuando más lo necesitaba
+**3. La fractura se vuelve visible en 2020**
+En 2020, las muertes por diabetes subieron **24%** respecto al año anterior (4.940 → 6.129). Ese mismo año, las compras públicas de insulina cayeron **35%** y tocaron su punto más bajo en cinco años.
 
-La ENSANUT 2018 ya no incluyó biomarcadores públicos de glucosa comparables con la edición anterior. Cuando la enfermedad empezaba a crecer, el país perdió una forma directa de seguirle el rastro.
+**4. Catorce centavos que se convirtieron en veinte**
+Entre 2019 y 2024, el Estado invirtió en promedio **$0,20 por persona por año** en insulina ($19,8 millones / 16,9 millones de personas / 6 años). En ese mismo período murieron **25.708 personas** de diabetes en Ecuador.
 
-### 3. La fractura se vuelve visible en 2020
+**5. La insulina no sigue el mapa de la necesidad**
+Cuatro provincias combinan mortalidad alta con inversión per cápita en insulina por debajo de la mediana nacional: **El Oro, Esmeraldas, Carchi y Cotopaxi**. Ahí se abre la brecha más visible.
 
-Mientras la mortalidad por diabetes subió con fuerza, las compras públicas de insulina cayeron. Ese cruce marca uno de los puntos narrativos centrales del proyecto.
+**6. Morir implica desplazarse**
+**1 de cada 4** residentes rurales que murió de diabetes falleció fuera de su provincia de residencia. La enfermedad se complica en el campo; la muerte queda registrada en la ciudad.
 
-### 4. La respuesta territorial fue desigual
+**7. No todas las provincias siguen el patrón esperado**
+Ocho provincias muestran *desviación positiva*: mortalidad observada por debajo de lo que su nivel de pobreza haría esperar. Puede reflejar resistencia cultural, dieta más tradicional, o menor capacidad institucional para registrar la causa de muerte. Las dos lecturas interpelan al Estado.
 
-Hay provincias donde la mortalidad acumulada 2019–2024 es alta y la inversión per cápita en insulina permanece relativamente baja. Ahí aparece la brecha estatal más visible.
+---
 
-### 5. Morir también implica desplazarse
+## Fuentes de datos
 
-Alrededor de **1 de cada 4** residentes rurales que murieron por diabetes falleció lejos de su lugar de residencia. La enfermedad se complica en el campo y la muerte termina registrada en la ciudad.
+| Fuente | Período | Uso principal |
+|--------|---------|---------------|
+| ENSANUT 2018 (INEC/MSP) | 2018 | Sobrepeso/obesidad rural, ultraprocesados adolescentes |
+| Defunciones Generales INEC | 2019–2024 | Mortalidad CIE-10 E10–E14 por provincia |
+| Censo de Población y Vivienda 2022 | 2022 | Denominador poblacional, NBI, etnia |
+| SERCOP API compras públicas | 2015–2024 | Compras de insulina por provincia y año |
+| STEPS 2018 MSP | 2018 | Prevalencia glucosa elevada (cifra agregada, sin microdato) |
 
-### 6. No todas las provincias siguen el patrón esperado
+### Limpieza SERCOP — trazabilidad
 
-El proyecto identifica provincias con **desviación positiva**: lugares donde, pese a altos niveles de pobreza, la mortalidad observada por diabetes cae por debajo de lo esperable. Eso no prueba protección automática: puede reflejar mejores condiciones locales, transición más lenta o problemas de registro.
+Los datos de SERCOP requirieron depuración antes de su uso analítico. El script `data/analisis/rebuild_sercop_cruce1.py` reproduce el proceso completo y genera las siguientes tablas de exclusión en `data/processed/`:
 
-## Estructura del proyecto
+| Criterio de exclusión | Registros | Archivo |
+|-----------------------|-----------|---------|
+| Duplicados exactos (paginación API) | 1.267 | `sercop_excluidos_duplicados.csv` |
+| Sin monto válido o sin región | 62 | `sercop_excluidos_sin_datos.csv` |
+| Descripción "excluye hormonas sexuales e insulinas" | 26 | `sercop_excluidos_excluye_insulinas.csv` |
+| **Total excluidos** | **1.355** | |
+| **Registros finales** | **5.871** | `sercop_insulina_consolidado.csv` |
+
+---
+
+## Metodología
+
+El análisis se resuelve a nivel **provincial** (24 unidades). No fue una preferencia de diseño: los microdatos de defunciones del INEC no incluyen cantón de residencia (`cant_res`), solo cantón de fallecimiento (`cant_fall`), que sesgaría el análisis hacia provincias con hospitales de referencia. La escala provincial es la más granular que los datos permiten defender.
+
+**Estandarización:** todo se lleva a tasas por 100.000 habitantes usando población del Censo 2022 como denominador fijo. Las tasas de mortalidad presentadas son **acumuladas 2019–2024**, no anuales.
+
+```
+tasa_acumulada_100k = (muertes_2019_2024 / población_provincia_2022) × 100.000
+insulina_per_capita = monto_usd_2019_2024 / población_provincia_2022
+```
+
+**Lenguaje inferencial:** con n = 24, ningún coeficiente alcanza p < 0,05. Spearman NBI~mortalidad: r = −0,36, p = 0,082; OLS: R² = 0,078, p = 0,187. Los resultados se reportan como tendencias sugerentes, no como prueba de hipótesis.
+
+**Documentación detallada:** ver [`METODOLOGIA.md`](./METODOLOGIA.md) — incluye criterios de exclusión por fuente, fórmulas exactas, notas sobre encoding INEC 2019, discusión de sesgo de subregistro y flujo completo de reproducibilidad.
+
+---
+
+## Estructura del repositorio
 
 ```text
 bootcamp/
-├── guiones_storytelling.md
+├── README.md
+├── METODOLOGIA.md                  ← apéndice metodológico completo
+├── AGENTS.md                       ← estado del proyecto, decisiones, pendientes
 ├── data/
 │   ├── analisis/
+│   │   ├── rebuild_sercop_cruce1.py   ← script SERCOP (limpieza + cruces)
 │   │   ├── 01_limpieza_ensanut.ipynb
 │   │   ├── 02_limpieza_defunciones.ipynb
 │   │   ├── 03_limpieza_censo.ipynb
 │   │   ├── 04_sercop_api.ipynb
 │   │   ├── 05_cruce_1_barras.ipynb
 │   │   └── 06_cruce_2_scatter_desviacion.ipynb
-│   ├── processed/
-│   └── raw/
+│   ├── processed/                  ← outputs limpios listos para cruce
+│   └── raw/                        ← datos crudos por fuente
 └── web/
-    ├── public/
+    ├── public/data/                ← CSVs servidos a la historia web
     ├── src/
     └── package.json
 ```
 
-## Archivos procesados clave
+---
 
-Dentro de `data/processed/` destacan estos outputs:
+## Reproducibilidad
 
-- `ensanut_obesidad_rural_provincia.csv`
-- `defunciones_diabetes_serie_nacional.csv`
-- `defunciones_diabetes_provincia_total.csv`
-- `defunciones_diabetes_provincia_anio.csv`
-- `cruce1_barras_provincia.csv`
-- `cruce1_serie_nacional.csv`
-- `cruce2_scatter_provincia.csv`
-- `cruce2_desplazamiento_provincia.csv`
-- `sercop_insulina_consolidado.csv`
-- `sercop_provincia_total.csv`
-
-## La historia publicada
-
-La experiencia web se organiza como una historia scrolleable en cinco movimientos:
-
-1. `Hero`: la tesis y la distancia entre enfermedad y atención.
-2. `El campo que resistía`: el antes, la dieta y la transición alimentaria.
-3. `La fractura`: el quiebre temporal entre muertes e insulina.
-4. `El vacío del Estado`: la brecha territorial.
-5. `Los que resisten`: la anomalía territorial y la desviación positiva.
-6. `Cierre`: la síntesis editorial final.
-
-## Stack
-
-Frontend:
-
-- React 18
-- D3 7
-- Vite 5
-
-Análisis:
-
-- notebooks de Jupyter / ETL en `data/analisis/`
-
-## Datos geoespaciales y peso del repositorio
-
-Los archivos geoespaciales crudos de `data/raw/GEO/` no son necesarios para correr la experiencia web publicada y pueden ocupar espacio innecesario en el repositorio. Por eso el bundle auxiliar del shapefile provincial quedó excluido del control de versiones en `.gitignore`.
-
-Si se necesitara una versión plenamente reproducible de esa capa, puede reincorporarse después con una estrategia más liviana, por ejemplo GeoJSON simplificado o un release de datos aparte.
-
-## Cómo correr la web en local
-
-Desde la carpeta `web/`:
+Para reconstruir todos los outputs desde los datos crudos:
 
 ```bash
+# 1. Limpiar SERCOP y reconstruir cruces 1 (también genera tablas de trazabilidad)
+python3 data/analisis/rebuild_sercop_cruce1.py
+
+# 2–4. Limpiar fuentes restantes
+jupyter nbconvert --to notebook --execute --inplace data/analisis/02_limpieza_defunciones.ipynb
+jupyter nbconvert --to notebook --execute --inplace data/analisis/03_limpieza_censo.ipynb
+jupyter nbconvert --to notebook --execute --inplace data/analisis/01_limpieza_ensanut.ipynb
+
+# 5–6. Cruces analíticos
+jupyter nbconvert --to notebook --execute --inplace data/analisis/05_cruce_1_barras.ipynb
+jupyter nbconvert --to notebook --execute --inplace data/analisis/06_cruce_2_scatter_desviacion.ipynb
+```
+
+Los CSVs que sirven la web viven en `web/public/data/` y deben sincronizarse manualmente desde `data/processed/` cuando cambian los procesados.
+
+---
+
+## Correr la web en local
+
+```bash
+cd web
 npm install
 npm run dev
 ```
 
-Para compilar producción:
+Para build de producción: `npm run build`. Para previsualizar el build: `npm run preview`.
 
-```bash
-npm run build
-```
+---
 
-Para revisar el build:
+## Stack
 
-```bash
-npm run preview
-```
+| Capa | Tecnología |
+|------|-----------|
+| Historia web | React 18 + D3 7 + Vite 5 |
+| Análisis | Python 3 / Jupyter |
+| Deploy | GitHub Pages |
 
-## Estado metodológico
-
-Al cierre de esta versión:
-
-- las cifras públicas principales ya están alineadas con los outputs procesados;
-- la cifra pública de inversión quedó en `"$0,20 por persona por año"` para 2019–2024;
-- la cifra ENSANUT pública quedó en `62%` de adultos rurales con sobrepeso u obesidad;
-- las tasas públicas fueron rotuladas como **acumuladas 2019–2024** cuando corresponde;
-- el análisis principal se presenta explícitamente como provincial.
-
-Persisten pendientes residuales razonables para una auditoría futura:
-
-- revisión manual más fina de contratos SERCOP ambiguos;
-- afinamiento editorial de algunos claims sobre ruralidad;
-- posibles mejoras de claridad en ciertos gráficos.
+---
 
 ## Limitaciones
 
-- No se trabaja con microdato bioquímico público de diabetes confirmada para 2018.
-- El proyecto habla de ruralidad, pero el cruce principal se resuelve a nivel provincial porque el microdato de residencia no permite bajar de escala sin sesgos fuertes.
-- La comparación principal es territorial y provincial, no individual.
-- Las relaciones mostradas son asociaciones y tendencias, no pruebas de causalidad.
-- Puede existir subregistro de causa de muerte en zonas rurales remotas.
-- El cruce entre mortalidad y compras públicas no mide automáticamente acceso efectivo al tratamiento en territorio, sino respuesta estatal observable vía compras.
+- No existe microdato bioquímico público de diabetes confirmada para Ecuador 2018 (ENSANUT no incluyó glucosa; STEPS solo existe como PDF).
+- El análisis es provincial, no parroquial ni cantonal, por limitaciones del microdato INEC.
+- Las relaciones mostradas son asociaciones territoriales, no prueba de causalidad.
+- Puede existir sesgo de subregistro de causa de muerte en zonas rurales remotas, lo que afecta especialmente la interpretación de la desviación positiva.
+- La comparación mortalidad–compras públicas mide respuesta estatal observable, no acceso efectivo al tratamiento en territorio.
+
+---
 
 ## Por qué importa
 
-La historia no trata solo de diabetes. Trata de cómo un país puede modernizar el consumo sin modernizar el cuidado en la misma medida. Trata de qué se mide, qué se deja de medir, dónde responde el Estado y dónde llega tarde.
+Esta historia no trata solo de diabetes. Trata de cómo un país puede modernizar el consumo sin modernizar el cuidado en la misma medida. Trata de qué se mide, qué se deja de medir, dónde responde el Estado y dónde llega tarde.
 
-También trata de una pregunta periodística más grande: **qué se ve cuando se cruzan enfermedad, territorio y presupuesto público**.
+También es una pregunta periodística más grande: **qué se ve cuando se cruzan enfermedad, territorio y presupuesto público**.
+
+---
 
 ## Créditos
 
 **Autor:** Andrés Almeida  
-**Proyecto:** Bootcamp del Observatorio Al Dato, en colaboración con Fundación Datalat e Indeciencia  
+**Marco:** Bootcamp del Observatorio Al Dato, en colaboración con Fundación Datalat e Indeciencia  
 **Fecha:** mayo de 2026
 
-## Licencia y uso
+---
 
-Este repositorio se publica bajo licencia **MIT**.
+## Licencia
 
-Eso cubre el código y la estructura técnica del proyecto. Si se reutilizan la metodología, la narrativa, los textos o las visualizaciones en otros contextos públicos, se recomienda citar el proyecto completo y mantener atribución al autor y al bootcamp de origen.
+Código y estructura técnica bajo licencia **MIT**. Si se reutiliza la metodología, la narrativa o las visualizaciones en contextos públicos, se recomienda citar el proyecto completo con atribución al autor y al bootcamp de origen.

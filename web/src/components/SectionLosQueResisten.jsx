@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useInView } from '../hooks/useInView'
 import ScatterDesviacion from './charts/ScatterDesviacion'
 
@@ -20,6 +21,78 @@ function FadeUp({ children, delay = 0 }) {
 const POSITIVAS = ['Bolívar', 'Cañar', 'Sucumbíos', 'Manabí', 'Los Ríos', 'Santo Domingo', 'Galápagos', 'Pichincha']
 const NEGATIVAS = ['Santa Elena', 'Guayas', 'El Oro', 'Esmeraldas', 'Loja']
 
+// 24 provincias — orden mezclado para distribuir los colores uniformemente
+const DOTS = [
+  { id: 'guayas',      type: 'negative' },
+  { id: 'bolivar',     type: 'positive' },
+  { id: 'azuay',       type: 'neutral'  },
+  { id: 'santaelena',  type: 'negative' },
+  { id: 'canar',       type: 'positive' },
+  { id: 'chimborazo',  type: 'neutral'  },
+  { id: 'eloro',       type: 'negative' },
+  { id: 'sucumbios',   type: 'positive' },
+  { id: 'carchi',      type: 'neutral'  },
+  { id: 'esmeraldas',  type: 'negative' },
+  { id: 'manabi',      type: 'positive' },
+  { id: 'cotopaxi',    type: 'neutral'  },
+  { id: 'loja',        type: 'negative' },
+  { id: 'losrios',     type: 'positive' },
+  { id: 'imbabura',    type: 'neutral'  },
+  { id: 'stodomingo',  type: 'positive' },
+  { id: 'morona',      type: 'neutral'  },
+  { id: 'galapagos',   type: 'positive' },
+  { id: 'orellana',    type: 'neutral'  },
+  { id: 'pichincha',   type: 'positive' },
+  { id: 'pastaza',     type: 'neutral'  },
+  { id: 'elnapo',      type: 'neutral'  },
+  { id: 'tungurahua',  type: 'neutral'  },
+  { id: 'zamora',      type: 'neutral'  },
+]
+
+function DotStrip() {
+  const [ref, inView] = useInView(0.25)
+  const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    if (inView && !active) setActive(true)
+  }, [inView, active])
+
+  return (
+    <div ref={ref} style={{ padding: '1.75rem 0 0.25rem' }}>
+      <div style={{ position: 'relative', height: '80px' }}>
+        <div style={{
+          position: 'absolute', left: 0, right: 0, top: '50%',
+          height: '1px', background: 'rgba(245,237,224,0.07)',
+        }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
+          {DOTS.map((dot, i) => (
+            <div
+              key={dot.id}
+              style={{
+                width:  dot.type === 'neutral' ? 6 : 8,
+                height: dot.type === 'neutral' ? 6 : 8,
+                borderRadius: '50%',
+                flexShrink: 0,
+                background:
+                  dot.type === 'positive' ? 'rgba(107,143,62,0.85)' :
+                  dot.type === 'negative' ? 'rgba(192,57,43,0.85)' :
+                  'rgba(245,237,224,0.14)',
+                animation: active && dot.type !== 'neutral'
+                  ? `dotfloat-${dot.type} 1.1s cubic-bezier(0.16,1,0.3,1) ${i * 0.05}s forwards`
+                  : 'none',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <p style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,237,224,0.2)', marginTop: '0.75rem' }}>
+        24 provincias
+      </p>
+    </div>
+  )
+}
+
 export default function SectionLosQueResisten() {
   return (
     <section className="section section--teal">
@@ -34,20 +107,20 @@ export default function SectionLosQueResisten() {
 
         <FadeUp delay={0.05}>
           <h2 className="t-headline" style={{ color: 'var(--text-light)', marginBottom: '0.75rem', maxWidth: '32ch' }}>
-            Hay un dato que obliga a mirar dos veces.
+            El mapa no cuadra.
           </h2>
         </FadeUp>
 
         <FadeUp delay={0.08}>
           <p className="t-deck t-deck--light section-resistencia__deck">
-            En varias provincias más pobres aparece una señal inesperada: mortalidad por debajo de lo esperable. Puede hablar tanto de protección como de ausencia de registro.
+            En varias provincias más pobres aparece una señal inesperada: mortalidad por debajo de lo esperable. Puede ser resistencia. También puede ser que el sistema no vio lo que pasó.
           </p>
         </FadeUp>
 
         <FadeUp delay={0.18}>
           <p className="t-body section-resistencia__body section-resistencia__intro">
-            Si la pobreza y la mortalidad caminaran siempre de la mano, el dibujo sería más simple.
-            Pero aquí aparecen provincias que no encajan del todo en esa lógica.
+            Si pobreza y mortalidad se movieran siempre juntas, la lectura sería más sencilla.
+            Pero ocho provincias no encajan.
           </p>
         </FadeUp>
 
@@ -64,7 +137,7 @@ export default function SectionLosQueResisten() {
                   A eso le llamamos <span className="section-resistencia__term">desviación positiva</span>: una señal
                   de que el patrón entre pobreza, enfermedad y respuesta institucional no se repite igual en todo el país.
                 </p>
-                <p className="section-resistencia__definition-caption">No es una absolución del problema. Es una alerta para leer mejor el mapa.</p>
+                <p className="section-resistencia__definition-caption">El dato señala una anomalía. No la explica.</p>
               </div>
             </div>
           </div>
@@ -73,6 +146,7 @@ export default function SectionLosQueResisten() {
         <div className="section-resistencia__compare">
           <FadeUp delay={0.34}>
             <article className="section-resistencia__ledger section-resistencia__ledger--positive">
+
               <div className="section-resistencia__ledger-head">
                 <span className="section-resistencia__ledger-number">8</span>
                 <div>
@@ -83,6 +157,8 @@ export default function SectionLosQueResisten() {
               <p className="section-resistencia__places">{POSITIVAS.join(' · ')}</p>
             </article>
           </FadeUp>
+
+          <div className="section-resistencia__compare__divider" aria-hidden="true" />
 
           <FadeUp delay={0.4}>
             <article className="section-resistencia__ledger section-resistencia__ledger--negative">
@@ -98,11 +174,13 @@ export default function SectionLosQueResisten() {
           </FadeUp>
         </div>
 
+        <DotStrip />
+
         <FadeUp delay={0.46}>
           <div className="section-resistencia__note">
             <p className="section-resistencia__note-label">Cómo leer esta sección</p>
             <p className="section-resistencia__note-copy">
-              No significa que el problema desaparezca. Señala los lugares donde el patrón se rompe y donde vale la pena mirar qué protege o qué falta.
+              No significa que el problema sea menor. Significa que el patrón se rompe. Y que donde se rompe, algo ocurre que todavía no se entiende del todo.
             </p>
           </div>
         </FadeUp>
@@ -124,8 +202,11 @@ export default function SectionLosQueResisten() {
                 Otra posibilidad
               </p>
               <p className="section-resistencia__hypothesis-copy">
-                En las zonas más remotas, la causa de muerte también puede registrarse peor. Lo que aparece como menos diabetes podría ser, en parte, menos capacidad institucional para verla y nombrarla.
-                <strong> A veces, lo que falta no es la enfermedad sino la capacidad de registrarla.</strong>
+                En las zonas más remotas, la causa de muerte también puede registrarse peor. Si un paciente rural muere en su comunidad sin llegar a un centro hospitalario, la certificación de causa queda en manos de un médico rural que no siempre dispone de historial clínico ni de pruebas diagnósticas recientes. En esos casos, la diabetes puede quedar encubierta bajo causas como "insuficiencia cardíaca" o "causa no determinada".
+                <strong> Lo que el dato muestra como menor mortalidad podría ser, en parte, menor capacidad del sistema para ver y nombrar lo que ya ocurrió.</strong>
+              </p>
+              <p className="section-resistencia__hypothesis-copy" style={{ marginTop: '0.75rem', fontSize: '0.78rem', opacity: 0.7 }}>
+                Ambas lecturas no se cancelan: una provincia puede tener dieta más tradicional <em>y</em> subregistro más alto al mismo tiempo. El dato invita a investigar, no a concluir.
               </p>
             </div>
           </div>
@@ -137,7 +218,7 @@ export default function SectionLosQueResisten() {
               Donde el patrón se rompe
             </p>
             <p className="chart-note" style={{ color: 'rgba(184,168,152,0.5)', marginBottom: '1rem' }}>
-              La línea punteada marca la trayectoria esperable. Los puntos que se alejan de ella son los que merecen una segunda lectura.
+              La línea punteada marca la trayectoria esperable. Los que se alejan son los que no encajan.
             </p>
           </div>
         </FadeUp>

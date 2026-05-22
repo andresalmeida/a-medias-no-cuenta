@@ -5,7 +5,7 @@ Bootcamp Al Dato · Mayo 2026
 
 ## Dato fuerte elegido
 
-> Entre 2019 y 2024, el Estado ecuatoriano invirtió, en promedio, **catorce centavos de dólar por persona al año** en insulina.
+> Entre 2019 y 2024, el Estado ecuatoriano invirtió, en promedio, **veinte centavos de dólar por persona al año** en insulina.
 > En ese mismo período, **25.708 personas** murieron de diabetes.
 
 Es el dato que más sangra porque no requiere comparación: solo leerlo despacio.
@@ -48,7 +48,7 @@ todavía no ha llegado."
 [0:22 – 0:34]
 FONDO NEGRO
 TEXTO GRANDE EN PANTALLA (aparece con impacto):
-"$0,14"
+"$0,20"
 
 (debajo, más pequeño, aparece después de 2 segundos)
 "Por persona. Por año.
@@ -140,7 +140,7 @@ En las últimas décadas, las carreteras y los mercados
 llevaron al campo ecuatoriano algo que antes no había:
 gaseosas, comida ultraprocesada, sedentarismo.
 
-El 39% de los adultos rurales ya vivía con sobrepeso
+El 62% de los adultos rurales vivía con sobrepeso
 u obesidad en 2018. La diabetes empezó a crecer.
 ```
 **Dato destacado (color acento):**
@@ -160,7 +160,7 @@ Ese mismo año, la encuesta nacional dejó de medir glucosa en sangre.
 
 **Título:**
 ```
-$0,14
+$0,20
 ```
 **Subtítulo:**
 ```
@@ -235,7 +235,7 @@ SERCOP API compras públicas · ENSANUT 2018 · STEPS MSP 2018 · Censo 2022
 
 ## Notas editoriales generales
 
-- El dato del `$0,14` es el que más retiene. Es el eje de ambas piezas.
+- El dato del `$0,20` es el que más retiene. Es el eje de ambas piezas.
 - No usar "se evidencia", "se puede observar", "cabe destacar" — ese lenguaje mata el dato.
 - Los números van solos: no "aproximadamente 25.000", sino "25.708".
 - La voz es de primera persona colectiva implícita: "el campo", "la gente", "el Estado" — no el locutor.

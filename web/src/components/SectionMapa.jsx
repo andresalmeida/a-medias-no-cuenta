@@ -66,9 +66,9 @@ export default function SectionMapa() {
         <div className="two-col" style={{ marginBottom: '2.5rem' }}>
           <FadeUp delay={0.2}>
               <p className="t-body" style={{ color: 'var(--text-dim)' }}>
-              La franja costera concentra las tasas más altas. En cambio, varias provincias amazónicas
-              y del centro-sur aparecen con niveles comparativamente menores. El mapa no cuenta una sola historia:
-              cuenta ritmos distintos de cambio.
+              La franja costera concentra las tasas más altas. Varias provincias amazónicas
+              y del centro-sur aparecen con niveles menores. El mapa no es uniforme
+              porque la transición alimentaria tampoco lo fue.
             </p>
           </FadeUp>
           <FadeUp delay={0.25}>
@@ -83,7 +83,7 @@ export default function SectionMapa() {
         <FadeUp>
           <div style={{ marginBottom: '0.75rem' }}>
             <p className="chart-title" style={{ color: 'var(--text-light)' }}>
-              Dónde se muere más
+              La mortalidad tiene geografía
             </p>
             <p className="chart-note" style={{ color: 'rgba(184,168,152,0.45)' }}>
               El mapa compara la mortalidad acumulada por diabetes entre provincias entre 2019 y 2024. La columna lateral resume extremos y zonas críticas; el cursor añade detalle.

@@ -44,28 +44,38 @@ def load_clean_sercop() -> tuple[list[dict[str, object]], dict[str, int]]:
         "dropped_exclude_insulins": 0,
     }
 
+    EXCL_FIELDS = ["id", "ocid", "year", "region", "amount", "buyer", "title", "description"]
+
     deduped: list[dict[str, str]] = []
+    excl_duplicates: list[dict[str, str]] = []
     seen: set[tuple[tuple[str, str], ...]] = set()
     for row in raw_rows:
         key = tuple(row.items())
         if key in seen:
             stats["dropped_exact_duplicates"] += 1
+            excl_duplicates.append({f: row.get(f, "") for f in EXCL_FIELDS})
             continue
         seen.add(key)
         deduped.append(row)
+
+    excl_missing: list[dict[str, str]] = []
+    excl_insulins: list[dict[str, str]] = []
 
     cleaned: list[dict[str, object]] = []
     for row in deduped:
         if not (row.get("amount") or "").strip() or not (row.get("region") or "").strip():
             stats["dropped_missing_amount_or_region"] += 1
+            excl_missing.append({f: row.get(f, "") for f in EXCL_FIELDS})
             continue
         amount = float(row["amount"])
         if amount <= 0:
             stats["dropped_missing_amount_or_region"] += 1
+            excl_missing.append({f: row.get(f, "") for f in EXCL_FIELDS})
             continue
         text_blob = f"{row.get('title', '')} {row.get('description', '')}".upper()
         if "EXCLUYE HORMONAS SEXUALES E INSULINAS" in text_blob:
             stats["dropped_exclude_insulins"] += 1
+            excl_insulins.append({f: row.get(f, "") for f in EXCL_FIELDS})
             continue
         cleaned.append(
             {
@@ -86,6 +96,10 @@ def load_clean_sercop() -> tuple[list[dict[str, object]], dict[str, int]]:
                 "description": row["description"],
             }
         )
+
+    write_csv(PROCESSED / "sercop_excluidos_duplicados.csv", excl_duplicates, EXCL_FIELDS)
+    write_csv(PROCESSED / "sercop_excluidos_sin_datos.csv", excl_missing, EXCL_FIELDS)
+    write_csv(PROCESSED / "sercop_excluidos_excluye_insulinas.csv", excl_insulins, EXCL_FIELDS)
 
     return cleaned, stats
 

@@ -11,8 +11,18 @@ export default function Footer() {
               bootcamp del Observatorio Al Dato, en colaboración con Fundación Datalat e Indeciencia.
             </p>
             <p style={{ marginTop: '0.75rem' }}>
-              Sigue una pregunta sencilla y dura: qué pasa cuando la transformación de la vida rural
-              avanza más rápido que la presencia del sistema de salud.
+              Investiga qué ocurre cuando la dieta y los hábitos de vida cambian en el campo
+              antes de que el sistema de salud llegue a acompañar ese cambio.
+            </p>
+            <p style={{ marginTop: '0.75rem' }}>
+              <a
+                href="https://github.com/andresalmeida/a-medias-no-cuenta"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'rgba(212,130,90,0.7)', textDecoration: 'none', borderBottom: '1px solid rgba(212,130,90,0.3)' }}
+              >
+                Repositorio del proyecto →
+              </a>
             </p>
           </div>
 
@@ -50,7 +60,16 @@ export default function Footer() {
               <li>ENSANUT 2018 no incluyó biomarcadores de glucosa; STEPS 2018 solo está disponible como cifra agregada.</li>
             </ul>
             <p style={{ marginTop: '0.75rem', fontStyle: 'italic', color: 'rgba(184,168,152,0.5)' }}>
-              Los notebooks de análisis y los datos procesados están disponibles para su replicación.
+              El apéndice metodológico completo, los criterios de exclusión de SERCOP y el flujo
+              de replicación están documentados en{' '}
+              <a
+                href="https://github.com/andresalmeida/a-medias-no-cuenta/blob/main/METODOLOGIA.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'rgba(184,168,152,0.6)', textDecoration: 'none', borderBottom: '1px solid rgba(184,168,152,0.25)' }}
+              >
+                METODOLOGIA.md
+              </a>.
             </p>
           </div>
 

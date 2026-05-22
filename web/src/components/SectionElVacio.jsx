@@ -37,21 +37,21 @@ export default function SectionElVacio() {
 
         <FadeUp delay={0.05}>
           <h2 className="t-headline" style={{ color: 'var(--text)', marginBottom: '0.75rem', maxWidth: '22ch' }}>
-            La insulina no siempre llega donde más se la necesita.
+            La insulina no sigue el mapa de los muertos.
           </h2>
         </FadeUp>
 
         <FadeUp delay={0.08}>
           <p className="t-deck t-deck--muted">
-            En varias provincias, el peso de la enfermedad y la respuesta pública no avanzan en la misma dirección.
+            En varias provincias, la mortalidad es de las más altas del país. La insulina per cápita, de las más bajas.
           </p>
         </FadeUp>
 
         <FadeUp delay={0.1}>
           <p className="t-body" style={{ color: 'var(--text)', maxWidth: '68ch', marginBottom: '2rem' }}>
-            Al mirar provincia por provincia, la distribución de insulina no sigue con claridad el mapa de las muertes.
-            Hay lugares donde la carga es alta y la respuesta pública sigue siendo baja.
-            <strong> Ahí se abre la brecha.</strong>
+            Al cruzar provincia por provincia, la insulina no sigue el mapa de los muertos.
+            Hay provincias donde la enfermedad pesa más y el Estado llega menos.
+            <strong> Cuatro de ellas están en la tabla de abajo.</strong>
           </p>
         </FadeUp>
 
@@ -113,9 +113,9 @@ export default function SectionElVacio() {
 
             <FadeUp delay={0.3}>
               <p style={{ fontSize: '0.88rem', color: 'var(--text)', lineHeight: 1.75, marginTop: '0.25rem' }}>
-                La escena se repite: una parroquia sin atención suficiente, una emergencia,
-                un traslado, una ciudad que recibe demasiado tarde. Más que una red de cuidado,
-                el sistema termina funcionando como una cadena de derivación.
+                La secuencia se repite: una parroquia sin atención, una emergencia, un traslado.
+                El hospital urbano recibe lo que debió haberse resuelto antes.
+                A veces llega a tiempo. A veces no.
               </p>
             </FadeUp>
 

@@ -48,14 +48,18 @@ export default function Cierre() {
           }}
         >
           <p className="cierre__eyebrow">8 / 8 · El cierre</p>
-          <h2 className="cierre__title">A medias no cuenta.</h2>
+          <h2 className="cierre__title" style={{ color: 'transparent' }}>
+            <span style={{ color: '#c49a28' }}>A medias </span>
+            <span style={{ color: '#5a8fc8' }}>no </span>
+            <span style={{ color: '#c05040' }}>cuenta.</span>
+          </h2>
           <p className="cierre__footnote">
-            La modernización también se mide en lo que un país alcanza a cuidar a tiempo.
+            Veinte centavos por persona al año. Con eso respondió el Estado a veinticinco mil muertes.
           </p>
           <p className="cierre__seal">
-            Ecuador
+            Primero Ecuador.
             <br />
-            esta historia también trata de lo que llega tarde
+            El médico, todavía no.
           </p>
         </div>
 

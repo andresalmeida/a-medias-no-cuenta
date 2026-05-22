@@ -33,13 +33,13 @@ export default function Hero() {
           </h1>
 
           <p className="hero__sub" style={tr(0.36)}>
-            Cuando la atención llega tarde, la enfermedad ya ganó terreno.
+            Lo que ocurre cuando la modernización llega antes que la medicina.
           </p>
 
           <p className="hero__lede" style={tr(0.56)}>
-            Entre 2019 y 2024, la diabetes mató a 25.708 personas en Ecuador.
-            Mientras tanto, la insulina comprada por el Estado promedió veinte centavos de dólar por persona al año.
-            Esta historia sigue esa distancia: la que separa a muchas comunidades rurales de la atención que necesitaban a tiempo.
+            Entre 2019 y 2024, murieron 25.708 personas de diabetes en Ecuador.
+            El Estado invirtió, en promedio, veinte centavos de dólar por persona al año en insulina.
+            Lo que sigue es el espacio entre esas dos cifras.
           </p>
 
           <div className="hero__scroll" style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.9s ease 1.05s' }}>
@@ -51,8 +51,8 @@ export default function Hero() {
         <div className="hero__side" style={tr(0.72)}>
           <div className="hero__side-note">
             <strong>Hipótesis central</strong>
-            En buena parte del campo ecuatoriano, los productos llegaron antes que el cuidado.
-            La modernización entró por la tienda; la salud pública, en cambio, avanzó con mucha más lentitud.
+            En muchas comunidades rurales del Ecuador, los productos llegaron con las carreteras.
+            La atención médica, en muchos lugares, sigue tratando de llegar.
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ export default function SectionLaFractura() {
 
         <FadeUp delay={0.08}>
           <p className="t-deck t-deck--light">
-            En 2020, la diabetes mató más y el Estado compró menos insulina. Ahí la historia deja de ser abstracta.
+            En 2020, la diabetes mató más y el Estado compró menos insulina.
           </p>
         </FadeUp>
 
@@ -75,38 +75,60 @@ export default function SectionLaFractura() {
                 En 2020 murieron <strong style={{ color: 'var(--text-light)' }}>6.129 personas por diabetes</strong>.
                 Fue un salto brusco. Ese mismo año, las compras públicas de insulina cayeron{' '}
                 <strong style={{ color: '#e74c3c' }}>35%</strong> y tocaron su punto más bajo en cinco años.
-                La pandemia tensó el sistema, pero también dejó expuesta una fragilidad previa.
+                La pandemia tensó el sistema. La grieta, sin embargo, ya estaba antes.
               </p>
             </FadeUp>
             <FadeUp delay={0.25}>
               <p className="t-body" style={{ color: 'var(--text-dim)' }}>
-                La baja posterior no debería leerse como una recuperación limpia.
+                La baja posterior no fue una recuperación.
                 Parte del daño ya estaba hecho, y en las zonas más apartadas el registro de causa de muerte sigue siendo frágil.
-                Tampoco el repunte de 2023 cuenta una historia de mejora sostenida: después del desplome, las compras rebotan de forma irregular y no corrigen la fragilidad de fondo.
+                El repunte de 2023 tampoco es lo que parece: un solo contrato concentró ese año. Sin él, la línea no sube.
               </p>
             </FadeUp>
           </div>
 
-          <div>
-            <FadeUp delay={0.2}>
-              <div className="callout-note" style={{ color: 'rgba(231,76,60,0.72)', marginBottom: '1.1rem' }}>
-                <span className="callout-note__label" style={{ color: 'rgba(231,76,60,0.95)' }}>Hallazgo</span>
-                <p className="callout-note__body">
-                  La ENSANUT 2018 ya no midió glucosa en sangre con microdato público.
-                  En el momento en que la enfermedad empezaba a crecer, el país perdió una forma directa de seguirle el rastro.
-                </p>
+          <FadeUp delay={0.2}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.7rem' }}>
+                <span style={{
+                  fontFamily: 'var(--sans)',
+                  fontSize: '0.58rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(231,76,60,0.65)',
+                  whiteSpace: 'nowrap',
+                }}>Hallazgo</span>
+                <span style={{ flex: 1, height: '1px', background: 'rgba(231,76,60,0.18)' }} />
               </div>
-            </FadeUp>
-            <FadeUp delay={0.35}>
-              <div className="callout-note" style={{ color: 'rgba(58,122,143,0.72)' }}>
-                <span className="callout-note__label" style={{ color: 'rgba(58,122,143,0.95)' }}>Sobre el gráfico</span>
-                <p className="callout-note__body">
-                  Las dos líneas no miden lo mismo, pero sí permiten ver una escena clave:
-                  mientras una sube con violencia, la otra cae. Esa divergencia marca la fractura.
-                </p>
+              <p style={{ fontSize: '0.88rem', lineHeight: 1.75, color: 'var(--text-dim)' }}>
+                La ENSANUT 2018 ya no midió glucosa en sangre con microdato público.
+                En el momento en que la enfermedad empezaba a crecer, el país perdió una forma directa de seguirle el rastro.
+              </p>
+
+              <div style={{ marginTop: '1.75rem' }}>
+                <svg viewBox="0 0 240 44" width="100%" height="40" fill="none" aria-hidden="true" style={{ overflow: 'visible' }}>
+                  <path
+                    d="M 0,22 L 12,22 L 17,13 L 22,22 L 26,22 L 31,3 L 36,41 L 41,22 L 52,22 L 57,14 L 62,22 L 66,22 L 240,22"
+                    stroke="rgba(192,57,43,0.5)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    pathLength="1"
+                    style={{ strokeDasharray: 1, strokeDashoffset: 1, animation: 'drawpath 6s linear infinite' }}
+                  />
+                </svg>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.3rem' }}>
+                  <span style={{ fontSize: '0.55rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,237,224,0.25)' }}>
+                    ENSANUT 2012 · midió glucosa
+                  </span>
+                  <span style={{ fontSize: '0.55rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(192,57,43,0.45)' }}>
+                    ENSANUT 2018 · no midió
+                  </span>
+                </div>
               </div>
-            </FadeUp>
-          </div>
+            </div>
+          </FadeUp>
         </div>
 
         {/* ── Gráfico full-width ── */}
@@ -115,8 +137,21 @@ export default function SectionLaFractura() {
             <p className="chart-title" style={{ color: 'var(--text-light)' }}>
               Dos curvas, un mismo quiebre
             </p>
-            <p className="chart-note" style={{ color: 'rgba(184,168,152,0.5)', marginBottom: '1rem' }}>
+            <p className="chart-note" style={{ color: 'rgba(184,168,152,0.5)', marginBottom: '0.9rem' }}>
               La línea sólida sigue las muertes por diabetes. La punteada, las compras de insulina hechas por el Estado.
+            </p>
+            <p style={{
+              fontFamily: 'var(--sans)',
+              fontSize: '0.8rem',
+              color: 'rgba(245,237,224,0.48)',
+              lineHeight: 1.75,
+              borderTop: '1px solid rgba(255,255,255,0.07)',
+              paddingTop: '0.65rem',
+              marginBottom: '1.5rem',
+              maxWidth: '48ch',
+            }}>
+              Las dos líneas miden cosas distintas. Pero en 2020 van en sentidos opuestos.
+              Los muertos suben. La insulina cae.
             </p>
           </div>
         </FadeUp>

@@ -40,16 +40,16 @@ export default function SectionElCampo() {
             <FadeUp delay={0.2}>
               <p className="t-body" style={{ color: 'var(--text)', marginBottom: '1.5rem' }}>
                 Durante mucho tiempo, comer en el campo significó comer de la propia tierra:
-                papa, maíz, quinua, fréjol. Esa dieta cotidiana, hecha de productos cercanos
-                y poco procesados, ayudó a contener enfermedades que hoy avanzan con más facilidad.
+                papa, maíz, quinua, fréjol. Esa dieta ayudó a contener enfermedades
+                que hoy ya no encuentran el mismo freno.
               </p>
             </FadeUp>
 
             <FadeUp delay={0.3}>
               <p className="t-body" style={{ color: 'var(--text)', marginBottom: '2rem' }}>
                 En muchas comunidades indígenas de la Sierra centro y de la Amazonía,
-                ese equilibrio se sostuvo durante generaciones. No porque el riesgo no existiera,
-                sino porque la forma de vivir todavía lo contenía.
+                ese equilibrio se sostuvo durante generaciones. No porque la enfermedad fuera
+                imposible, sino porque la vida cotidiana todavía la frenaba.
               </p>
             </FadeUp>
 
@@ -95,7 +95,7 @@ export default function SectionElCampo() {
             <FadeUp delay={0.35}>
               <div className="quote-banner">
                 <blockquote className="pull-quote" style={{ color: 'var(--terra)', borderColor: 'var(--terra)', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', marginTop: '0' }}>
-                  "La ciudad entró al campo como consumo mucho antes de entrar como cuidado."
+                  "No llegó primero un médico. Llegaron las carreteras."
                 </blockquote>
               </div>
             </FadeUp>
