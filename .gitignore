@@ -1,0 +1,30 @@
+.DS_Store
+
+# Working notes / private agent context
+AGENTS.md
+CLAUDE.md
+.claude/
+
+# Frontend artifacts
+web/node_modules/
+web/dist/
+web/public/images/hero-editorial.png
+
+# Local environment / editor noise
+.vscode/
+.idea/
+
+# Heavy or auxiliary geospatial raw files not needed for app runtime
+data/raw/GEO/*.shp
+data/raw/GEO/*.shx
+data/raw/GEO/*.dbf
+data/raw/GEO/*.prj
+data/raw/GEO/*.cpg
+data/raw/GEO/*.sbn
+data/raw/GEO/*.sbx
+data/raw/GEO/*.xml
+data/raw/GEO/*.pdf
+
+# Raw large source files kept locally but excluded from GitHub repo
+data/raw/INEC/*.csv
+data/raw/ENSANUT/*.csv
