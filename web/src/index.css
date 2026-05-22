@@ -1625,25 +1625,46 @@ a { color: inherit; }
 }
 
 @media (max-width: 900px) {
+  .container {
+    padding: 0 clamp(1.15rem, 4vw, 1.5rem);
+  }
+
+  .section {
+    padding: clamp(3.25rem, 8vw, 4.5rem) 0;
+  }
+
   .two-col {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
 
+  .section-label {
+    margin-bottom: 1.5rem;
+  }
+
+  .t-deck {
+    margin-bottom: 2rem;
+  }
+
   .section-resistencia__definition {
     max-width: none;
+    padding: 1.15rem 0 2rem;
   }
 
   .section-resistencia__definition::before {
-    width: 70vw;
+    width: 58vw;
     left: 0;
     top: 0;
   }
 
   .section-resistencia__definition-sheet {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.9rem;
     padding: 1.2rem 1.15rem 1.3rem 1.15rem;
+  }
+
+  .section-resistencia__definition-sheet::before {
+    transform: rotate(-0.35deg);
   }
 
   .section-resistencia__definition-sheet::after {
@@ -1657,15 +1678,28 @@ a { color: inherit; }
 
   .section-resistencia__definition-title {
     max-width: none;
+    font-size: clamp(2.35rem, 9vw, 3.7rem);
   }
 
   .section-resistencia__definition-copy {
+    max-width: none;
+    font-size: clamp(1.08rem, 3.5vw, 1.28rem);
+    line-height: 1.58;
+  }
+
+  .section-resistencia__definition-caption {
     max-width: none;
   }
 
   .section-resistencia__compare {
     grid-template-columns: 1fr;
     gap: 1.75rem;
+  }
+
+  .section-resistencia__ledger--positive,
+  .section-resistencia__ledger--negative {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .section-resistencia__hypotheses {
@@ -1684,6 +1718,7 @@ a { color: inherit; }
   .metric-band {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    margin: 2.5rem 0;
   }
 
   .metric-band__item {
@@ -1706,11 +1741,58 @@ a { color: inherit; }
   .hero__frame,
   .cierre__grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .hero {
+    padding: clamp(4rem, 10vw, 5.5rem) 0 2rem;
+  }
+
+  .hero__frame {
+    align-items: flex-end;
+  }
+
+  .hero__copy {
+    max-width: 100%;
+  }
+
+  .hero__toprail {
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.72rem;
+  }
+
+  .hero__kicker {
+    font-size: 0.72rem;
+  }
+
+  .hero__sub,
+  .hero__lede {
+    max-width: 100%;
+  }
+
+  .hero__sub {
+    font-size: clamp(1.2rem, 4vw, 1.45rem);
+  }
+
+  .hero__bg-num {
+    right: -0.08em;
+    bottom: 0.02em;
+    font-size: clamp(8rem, 35vw, 14rem);
   }
 
   .hero__side {
     align-items: flex-start;
     gap: 0.65rem;
+  }
+
+  .hero__side-note {
+    max-width: 24rem;
+    padding-left: 0.85rem;
   }
 
   .hero__index {
@@ -1721,6 +1803,37 @@ a { color: inherit; }
     grid-template-columns: 1fr;
   }
 
+  .cierre {
+    min-height: auto;
+    padding: 4rem 1.15rem 3rem;
+  }
+
+  .cierre__grid {
+    max-width: 38rem;
+  }
+
+  .cierre__stats {
+    gap: 1.4rem;
+  }
+
+  .cierre__center {
+    order: -1;
+    padding: 0 0 1rem;
+  }
+
+  .cierre__footnote {
+    max-width: 22ch;
+  }
+
+  .footer {
+    padding: 3rem 0 2.4rem;
+  }
+
+  .footer__grid {
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
   /* Grids inline que no usan .two-col */
   .grid-responsive-2 {
     grid-template-columns: 1fr !important;
@@ -1728,6 +1841,32 @@ a { color: inherit; }
 }
 
 @media (max-width: 640px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+
+  .section-label {
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-label__line {
+    width: 22px;
+  }
+
+  .chart-title {
+    font-size: 1.2rem;
+  }
+
+  .chart-note {
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
   /* Extremes comparison en SectionMapa */
   .extreme-compare {
     grid-template-columns: 1fr;
@@ -1750,8 +1889,8 @@ a { color: inherit; }
   }
 
   .chart-shell {
-    padding: 2rem 1.25rem;
-    margin: 0 -1.25rem;
+    padding: 1.6rem 1rem;
+    margin: 0 -1rem;
   }
 
   .section-ledger__head,
@@ -1761,6 +1900,7 @@ a { color: inherit; }
 
   .pull-quote {
     transform: none;
+    margin: 2rem 0;
   }
 
   .cierre {
@@ -1770,14 +1910,89 @@ a { color: inherit; }
   .cierre__center {
     text-align: center;
   }
+
+  .cierre__title {
+    font-size: clamp(3rem, 15vw, 4.8rem);
+  }
+
+  .cierre__seal {
+    margin-top: 1.35rem;
+    line-height: 1.65;
+  }
+
+  .hero__toprail::after {
+    display: none;
+  }
+
+  .hero__scroll {
+    font-size: 0.72rem;
+    margin-top: 1.6rem;
+  }
+
+  .hero__scroll-line {
+    width: 30px;
+  }
+
+  .hero__side-note {
+    max-width: 100%;
+    font-size: 0.78rem;
+  }
+
+  .section-resistencia__definition-sheet {
+    padding: 1rem 0.95rem 1.1rem;
+  }
+
+  .section-resistencia__definition-kicker {
+    font-size: 0.56rem;
+    letter-spacing: 0.17em;
+  }
+
+  .section-resistencia__places {
+    font-size: 0.82rem;
+    line-height: 1.72;
+  }
+
+  .section-resistencia__note-copy,
+  .section-resistencia__hypothesis-copy {
+    font-size: 0.88rem;
+    line-height: 1.72;
+  }
 }
 
 @media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
 
   .hero__title {
     font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .hero__bg-num {
+    font-size: clamp(6rem, 34vw, 9rem);
+    opacity: 0.8;
+  }
+
+  .metric-band__value {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  .section-ledger__head span {
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+  }
+
+  .section-ledger__row strong,
+  .section-ledger__row span {
+    font-size: 0.82rem;
+  }
+
+  .footer__bottom {
+    font-size: 0.7rem;
+    gap: 0.75rem;
   }
 }
