@@ -113,14 +113,13 @@ export default function SectionLosQueResisten() {
 
         <FadeUp delay={0.08}>
           <p className="t-deck t-deck--light section-resistencia__deck">
-            En varias provincias más pobres aparece una señal inesperada: mortalidad por debajo de lo esperable. Puede ser resistencia. También puede ser que el sistema no vio lo que pasó.
+            En la mayoría de provincias, ser más pobre significa morir más de diabetes. Pero en ocho, ese patrón no se cumple. Algo las protege. Nadie sabe exactamente qué.
           </p>
         </FadeUp>
 
         <FadeUp delay={0.18}>
           <p className="t-body section-resistencia__body section-resistencia__intro">
-            Si pobreza y mortalidad se movieran siempre juntas, la lectura sería más sencilla.
-            Pero ocho provincias no encajan.
+            Bolívar es una de las provincias más pobres del Ecuador. Sus índices de necesidades básicas insatisfechas superan el promedio nacional. Y sin embargo, su mortalidad por diabetes cae por debajo de lo que sus condiciones harían prever. No es la única.
           </p>
         </FadeUp>
 
@@ -178,9 +177,12 @@ export default function SectionLosQueResisten() {
 
         <FadeUp delay={0.46}>
           <div className="section-resistencia__note">
-            <p className="section-resistencia__note-label">Cómo leer esta sección</p>
+            <div className="section-resistencia__note-header">
+              <span className="section-resistencia__note-kicker">Límite del dato</span>
+              <span className="section-resistencia__note-rule" />
+            </div>
             <p className="section-resistencia__note-copy">
-              No significa que el problema sea menor. Significa que el patrón se rompe. Y que donde se rompe, algo ocurre que todavía no se entiende del todo.
+              No significa que el problema sea menor. Significa que algo protege. Y que los registros de defunciones, solos, no alcanzan para nombrarlo.
             </p>
           </div>
         </FadeUp>
@@ -192,8 +194,8 @@ export default function SectionLosQueResisten() {
                 Una posibilidad
               </p>
               <p className="section-resistencia__hypothesis-copy">
-                Allí donde todavía persisten dietas más cercanas a la producción local, menos ultraprocesados y una vida físicamente más activa, la transición alimentaria pudo avanzar más lento.
-                <strong> En ese caso, la resistencia también sería una forma de vida.</strong>
+                Hay comunidades donde el almuerzo todavía viene de la huerta, no del supermercado. Donde caminar varios kilómetros es parte del día. Donde la transición alimentaria llegó más tarde o encontró más resistencia.
+                <strong> Si eso es lo que protege, entonces lo que el dato llama anomalía estadística es, en realidad, una forma de vivir que todavía no ha cambiado del todo.</strong>
               </p>
             </div>
 
@@ -202,11 +204,37 @@ export default function SectionLosQueResisten() {
                 Otra posibilidad
               </p>
               <p className="section-resistencia__hypothesis-copy">
-                En las zonas más remotas, la causa de muerte también puede registrarse peor. Si un paciente rural muere en su comunidad sin llegar a un centro hospitalario, la certificación de causa queda en manos de un médico rural que no siempre dispone de historial clínico ni de pruebas diagnósticas recientes. En esos casos, la diabetes puede quedar encubierta bajo causas como "insuficiencia cardíaca" o "causa no determinada".
-                <strong> Lo que el dato muestra como menor mortalidad podría ser, en parte, menor capacidad del sistema para ver y nombrar lo que ya ocurrió.</strong>
+                Pero hay otra lectura. En las zonas más remotas, la muerte llega antes que el diagnóstico. Un paciente que muere en su comunidad, sin haber llegado a un hospital, queda en manos de un médico sin historial, sin pruebas recientes, sin certeza. La causa se escribe con lo que hay. A veces figura como insuficiencia cardíaca. A veces como causa no determinada.
+                <strong> La diabetes, en ese caso, no muere menos. Sencillamente, no aparece.</strong>
               </p>
               <p className="section-resistencia__hypothesis-copy" style={{ marginTop: '0.75rem', fontSize: '0.78rem', opacity: 0.7 }}>
-                Ambas lecturas no se cancelan: una provincia puede tener dieta más tradicional <em>y</em> subregistro más alto al mismo tiempo. El dato invita a investigar, no a concluir.
+                Las dos lecturas coexisten. Una provincia puede tener dieta más tradicional <em>y</em> subregistro más alto al mismo tiempo. El dato no resuelve esa ambigüedad. Solo señala dónde vale la pena ir a buscar.
+              </p>
+            </div>
+          </div>
+        </FadeUp>
+
+        <FadeUp delay={0.15}>
+          <div className="section-resistencia__agenda">
+            <div className="section-resistencia__agenda-head">
+              <p className="section-resistencia__agenda-eyebrow">Agenda de investigación</p>
+              <p className="section-resistencia__agenda-question">
+                ¿Qué están haciendo bien?
+              </p>
+              <p className="section-resistencia__agenda-lead">
+                Si ocho provincias se apartan del patrón, la tarea ya no es solo contarlas. Es entender qué las protege antes de que esa protección desaparezca.
+              </p>
+            </div>
+
+            <div className="section-resistencia__agenda-body">
+              <p className="section-resistencia__agenda-copy">
+                Es la pregunta que el mapa abre y los datos no pueden responder todavía. Las provincias que salen por debajo del patrón (Bolívar, Cañar, Sucumbíos) comparten algo. Puede ser la dieta. Puede ser el tejido comunitario. Puede ser que el sistema de salud llegó más tarde y, con él, también la transición alimentaria. Probablemente, algo de todo eso a la vez, en proporciones que nadie ha medido.
+              </p>
+              <p className="section-resistencia__agenda-copy">
+                Lo que sí está claro es que ese algo protege. Y que en lugar de esperar a que esa protección se erosione, como ya ocurrió con los patrones alimentarios en décadas anteriores, habría que entender de qué está hecha, antes de que deje de estarlo.
+              </p>
+              <p className="section-resistencia__agenda-coda">
+                Con datos abiertos y seis años de defunciones, la señal ya apareció. Eso habla del dato. Lo que sigue es una pregunta de prioridades.
               </p>
             </div>
           </div>
@@ -218,7 +246,7 @@ export default function SectionLosQueResisten() {
               Donde el patrón se rompe
             </p>
             <p className="chart-note" style={{ color: 'rgba(184,168,152,0.5)', marginBottom: '1rem' }}>
-              La línea punteada marca la trayectoria esperable. Los que se alejan son los que no encajan.
+              La línea punteada es lo que el modelo predice. Los puntos que se alejan son los que la historia no termina de explicar.
             </p>
           </div>
         </FadeUp>
