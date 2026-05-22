@@ -41,10 +41,13 @@ export default function BarrasDobles() {
 
     const container = svgRef.current.parentElement
     const W = container.clientWidth || 900
+    const isMobile = W < 640
     const barH = 24
     const gap = 4
-    const groupH = barH * 2 + gap + 16
-    const margin = { top: 34, right: 128, bottom: 54, left: 162 }
+    const groupH = isMobile ? barH * 2 + gap + 34 : barH * 2 + gap + 16
+    const margin = isMobile
+      ? { top: 24, right: 22, bottom: 68, left: 16 }
+      : { top: 34, right: 128, bottom: 54, left: 162 }
     const H = rows.length * groupH + margin.top + margin.bottom
     const w = W - margin.left - margin.right
 
@@ -68,11 +71,11 @@ export default function BarrasDobles() {
 
       // Province label
       gRow.append('text')
-        .attr('x', -8)
-        .attr('y', barH + 3)
-        .attr('text-anchor', 'end')
+        .attr('x', isMobile ? 0 : -8)
+        .attr('y', isMobile ? -4 : barH + 3)
+        .attr('text-anchor', isMobile ? 'start' : 'end')
         .attr('font-family', CHART_FONT)
-        .attr('font-size', '11.5px')
+        .attr('font-size', isMobile ? '10.5px' : '11.5px')
         .attr('font-weight', isCrisis ? '700' : '400')
         .attr('fill', isCrisis ? '#f08b7c' : 'rgba(245,237,224,0.72)')
         .text(d.provincia)
@@ -80,8 +83,8 @@ export default function BarrasDobles() {
       // Crisis marker
       if (isCrisis) {
         gRow.append('circle')
-          .attr('cx', -140)
-          .attr('cy', barH + 2)
+          .attr('cx', isMobile ? w - 6 : -140)
+          .attr('cy', isMobile ? -8 : barH + 2)
           .attr('r', 3)
           .attr('fill', '#f08b7c')
       }
@@ -154,6 +157,11 @@ export default function BarrasDobles() {
     leg.append('circle').attr('cx', 6).attr('cy', 42).attr('r', 3.5).attr('fill', '#f08b7c')
     leg.append('text').attr('x', 17).attr('y', 46).attr('font-size', '10.5px').attr('font-family', CHART_LABEL)
       .attr('fill', 'rgba(240,139,124,0.9)').text('Brecha crítica: más muertes, menos insulina')
+
+    if (isMobile) {
+      leg.selectAll('text')
+        .attr('font-size', '9.5px')
+    }
   }
 
   return (

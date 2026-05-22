@@ -29,8 +29,11 @@ export default function SerieHistorica() {
 
     const container = svgRef.current.parentElement
     const W = container.clientWidth || 900
-    const H = Math.min(440, W * 0.54)
-    const margin = { top: 34, right: 68, bottom: 54, left: 62 }
+    const isMobile = W < 640
+    const H = isMobile ? Math.min(460, W * 0.92) : Math.min(440, W * 0.54)
+    const margin = isMobile
+      ? { top: 82, right: 36, bottom: 54, left: 42 }
+      : { top: 34, right: 68, bottom: 54, left: 62 }
     const w = W - margin.left - margin.right
     const h = H - margin.top - margin.bottom
 
@@ -70,7 +73,7 @@ export default function SerieHistorica() {
       .call(d3.axisBottom(xScale).ticks(6).tickFormat(d3.format('d')))
       .selectAll('text')
       .attr('fill', 'rgba(245,237,224,0.48)')
-      .attr('font-size', '11px')
+      .attr('font-size', isMobile ? '9.5px' : '11px')
       .attr('font-family', CHART_FONT)
 
     g.select('.domain').attr('stroke', 'rgba(255,255,255,0.1)')
@@ -80,7 +83,7 @@ export default function SerieHistorica() {
       .call(d3.axisLeft(yMuertes).ticks(5).tickFormat(d => d3.format(',')(d)))
       .selectAll('text')
       .attr('fill', 'rgba(231,76,60,0.9)')
-      .attr('font-size', '10.5px')
+      .attr('font-size', isMobile ? '9px' : '10.5px')
       .attr('font-family', CHART_FONT)
 
     // Y axis insulina (right)
@@ -89,31 +92,31 @@ export default function SerieHistorica() {
       .call(d3.axisRight(yInsulina).ticks(5).tickFormat(d => `$${d3.format('.1s')(d)}`))
       .selectAll('text')
       .attr('fill', 'rgba(88,151,166,0.92)')
-      .attr('font-size', '10.5px')
+      .attr('font-size', isMobile ? '9px' : '10.5px')
       .attr('font-family', CHART_FONT)
 
     // Axis labels
     g.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -h / 2)
-      .attr('y', -44)
+      .attr('y', isMobile ? -28 : -44)
       .attr('text-anchor', 'middle')
       .attr('fill', 'rgba(231,76,60,0.72)')
-      .attr('font-size', '10.5px')
+      .attr('font-size', isMobile ? '9px' : '10.5px')
       .attr('font-family', CHART_LABEL)
       .attr('letter-spacing', '0.12em')
-      .text('MUERTES POR DIABETES')
+      .text(isMobile ? 'MUERTES' : 'MUERTES POR DIABETES')
 
     g.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -h / 2)
-      .attr('y', w + 52)
+      .attr('y', w + (isMobile ? 34 : 52))
       .attr('text-anchor', 'middle')
       .attr('fill', 'rgba(88,151,166,0.72)')
-      .attr('font-size', '10.5px')
+      .attr('font-size', isMobile ? '9px' : '10.5px')
       .attr('font-family', CHART_LABEL)
       .attr('letter-spacing', '0.12em')
-      .text('COMPRAS INSULINA (USD)')
+      .text(isMobile ? 'INSULINA (USD)' : 'COMPRAS INSULINA (USD)')
 
     // ── Anotación 2020: el cruce crítico ──
     const x2020 = xScale(2020)
@@ -124,11 +127,11 @@ export default function SerieHistorica() {
       .attr('stroke-dasharray', '4,4')
 
     // Caja de anotación 2020
-    const ann2020X = x2020 - 166
-    const ann2020Y = 4
+    const ann2020X = isMobile ? Math.max(4, x2020 - 112) : x2020 - 166
+    const ann2020Y = isMobile ? -64 : 4
     g.append('rect')
       .attr('x', ann2020X).attr('y', ann2020Y)
-      .attr('width', 164).attr('height', 54)
+      .attr('width', isMobile ? 108 : 164).attr('height', isMobile ? 48 : 54)
       .attr('fill', 'rgba(192,57,43,0.14)')
       .attr('stroke', 'rgba(231,76,60,0.32)')
       .attr('stroke-width', 0.8)
@@ -136,19 +139,19 @@ export default function SerieHistorica() {
 
     g.append('text')
       .attr('x', ann2020X + 10).attr('y', ann2020Y + 16)
-      .attr('fill', '#f08b7c').attr('font-size', '10px')
+      .attr('fill', '#f08b7c').attr('font-size', isMobile ? '8.5px' : '10px')
       .attr('font-family', CHART_LABEL).attr('font-weight', '500')
       .text('2020: muertes +24%')
 
     g.append('text')
       .attr('x', ann2020X + 10).attr('y', ann2020Y + 31)
-      .attr('fill', 'rgba(245,237,224,0.68)').attr('font-size', '9px')
+      .attr('fill', 'rgba(245,237,224,0.68)').attr('font-size', isMobile ? '8px' : '9px')
       .attr('font-family', CHART_FONT)
-      .text('insulina comprada: mínimo histórico')
+      .text(isMobile ? 'insulina: mínimo' : 'insulina comprada: mínimo histórico')
 
     g.append('text')
-      .attr('x', ann2020X + 10).attr('y', ann2020Y + 46)
-      .attr('fill', 'rgba(88,151,166,0.86)').attr('font-size', '9px')
+      .attr('x', ann2020X + 10).attr('y', ann2020Y + (isMobile ? 42 : 46))
+      .attr('fill', 'rgba(88,151,166,0.86)').attr('font-size', isMobile ? '8px' : '9px')
       .attr('font-family', CHART_FONT)
       .text('↓ 35% respecto a 2019')
 
@@ -156,11 +159,11 @@ export default function SerieHistorica() {
     if (data2023) {
       const x2023 = xScale(2023)
       g.append('text')
-        .attr('x', x2023 - 8).attr('y', yInsulina(data2023.insulina) - 8)
-        .attr('text-anchor', 'end')
-        .attr('fill', 'rgba(44,95,110,0.56)').attr('font-size', '8px')
+        .attr('x', x2023 - (isMobile ? 2 : 8)).attr('y', yInsulina(data2023.insulina) - (isMobile ? 10 : 8))
+        .attr('text-anchor', isMobile ? 'middle' : 'end')
+        .attr('fill', 'rgba(44,95,110,0.56)').attr('font-size', isMobile ? '7px' : '8px')
         .attr('font-family', CHART_FONT).attr('font-style', 'italic')
-        .text('2023 repunta, pero no corrige la caída de fondo')
+        .text(isMobile ? '2023 repunta' : '2023 repunta, pero no corrige la caída de fondo')
     }
 
     // Line muertes
@@ -241,7 +244,7 @@ export default function SerieHistorica() {
       .attr('opacity', 1)
 
     // Legend
-    const legend = g.append('g').attr('transform', `translate(${w - 182}, ${h - 62})`)
+    const legend = g.append('g').attr('transform', isMobile ? `translate(0, ${h + 18})` : `translate(${w - 182}, ${h - 62})`)
 
     legend.append('line')
       .attr('x1', 0).attr('x2', 20).attr('y1', 6).attr('y2', 6)
@@ -249,7 +252,7 @@ export default function SerieHistorica() {
     legend.append('text')
       .attr('x', 26).attr('y', 10)
       .attr('fill', 'rgba(245,237,224,0.8)')
-      .attr('font-size', '10px')
+      .attr('font-size', isMobile ? '9px' : '10px')
       .attr('font-family', CHART_FONT)
       .text('Muertes por diabetes')
 
@@ -260,7 +263,7 @@ export default function SerieHistorica() {
     legend.append('text')
       .attr('x', 26).attr('y', 30)
       .attr('fill', 'rgba(245,237,224,0.8)')
-      .attr('font-size', '10px')
+      .attr('font-size', isMobile ? '9px' : '10px')
       .attr('font-family', CHART_FONT)
       .text('Compras insulina (USD)')
   }

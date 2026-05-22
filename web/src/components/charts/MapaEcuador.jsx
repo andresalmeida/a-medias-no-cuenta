@@ -12,11 +12,13 @@ function norm(s) {
 }
 
 export default function MapaEcuador() {
+  const wrapRef    = useRef(null)
   const mainRef    = useRef(null)
   const galapRef   = useRef(null)
   const tooltipRef = useRef(null)
   const [geoData,  setGeoData]  = useState(null)
   const [mortData, setMortData] = useState(null)
+  const [isMobile, setIsMobile] = useState(false)
   const [ref, inView] = useInView(0.1)
 
   useEffect(() => {
@@ -38,6 +40,18 @@ export default function MapaEcuador() {
     if (!geoData || !mortData || !inView) return
     draw(geoData, mortData)
   }, [geoData, mortData, inView])
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+
+    const update = () => setIsMobile(el.clientWidth < 760)
+    update()
+
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   function labelCuadrante(c) {
     const m = {
@@ -83,7 +97,7 @@ export default function MapaEcuador() {
       if (!svgEl) return
 
       const W = svgEl.parentElement.clientWidth || 680
-      const H = W * 1.05
+      const H = isMobile ? W * 1.18 : W * 1.05
 
       d3.select(svgEl).selectAll('*').remove()
       const svg = d3.select(svgEl)
@@ -125,13 +139,13 @@ export default function MapaEcuador() {
       // Labels on notable provinces
       const LABEL = ['ESMERALDAS','GUAYAS','PICHINCHA','MANABI','SANTA ELENA','CARCHI','TUNGURAHUA','LOJA']
       svg.selectAll('text.lbl')
-        .data(mainland.filter(f => LABEL.includes(f.properties.provincia_norm)))
+        .data(mainland.filter(f => LABEL.includes(f.properties.provincia_norm) && (!isMobile || ['GUAYAS', 'ESMERALDAS', 'PICHINCHA', 'SANTA ELENA'].includes(f.properties.provincia_norm))))
         .enter().append('text')
         .attr('class', 'lbl')
         .attr('transform', f => { const c = path.centroid(f); return `translate(${c[0]},${c[1]})` })
         .attr('text-anchor', 'middle')
         .attr('font-family', CHART_FONT)
-        .attr('font-size', '8px')
+        .attr('font-size', isMobile ? '7px' : '8px')
         .attr('font-weight', '600')
         .attr('fill', f => {
           const d = mortMap.get(f.properties.provincia_norm)
@@ -213,7 +227,15 @@ export default function MapaEcuador() {
 
   return (
     <div ref={ref} style={{ position: 'relative' }}>
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+      <div
+        ref={wrapRef}
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? '1.25rem' : '1rem',
+          alignItems: 'flex-start'
+        }}
+      >
 
         {/* Main map */}
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -221,10 +243,19 @@ export default function MapaEcuador() {
         </div>
 
         {/* Sidebar: Galápagos + legend */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'row' : 'column',
+            flexWrap: isMobile ? 'wrap' : 'nowrap',
+            gap: isMobile ? '1rem' : '0.75rem',
+            paddingTop: isMobile ? '0' : '1rem',
+            width: isMobile ? '100%' : 'auto'
+          }}
+        >
           <svg ref={galapRef} style={{ display: 'block', flexShrink: 0 }} />
 
-          <div style={{ marginTop: '0.5rem' }}>
+          <div style={{ marginTop: isMobile ? '0' : '0.5rem', minWidth: isMobile ? '140px' : '0' }}>
             <p style={{
               fontFamily: CHART_FONT, fontSize: '9px',
               letterSpacing: '0.1em', textTransform: 'uppercase',
@@ -249,7 +280,7 @@ export default function MapaEcuador() {
           </div>
 
           {mortData && (
-            <div className="map-brief">
+            <div className="map-brief" style={isMobile ? { width: '100%', marginTop: 0 } : undefined}>
               <p className="map-brief__eyebrow">Lectura rápida</p>
 
               <div className="map-brief__group">

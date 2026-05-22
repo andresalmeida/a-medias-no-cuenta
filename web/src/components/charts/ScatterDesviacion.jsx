@@ -3,6 +3,7 @@ import * as d3 from 'd3'
 import { useInView } from '../../hooks/useInView'
 
 const LABEL_ALWAYS = ['GALAPAGOS', 'SANTA ELENA', 'GUAYAS', 'CANAR', 'BOLIVAR', 'SUCUMBIOS', 'LOS RIOS', 'ESMERALDAS']
+const LABEL_ALWAYS_MOBILE = ['GALAPAGOS', 'SANTA ELENA', 'GUAYAS', 'CANAR', 'ESMERALDAS']
 const CHART_FONT = 'Outfit, system-ui, sans-serif'
 const CHART_LABEL = 'Outfit, system-ui, sans-serif'
 const LABEL_OFFSETS = {
@@ -57,8 +58,11 @@ export default function ScatterDesviacion() {
 
     const container = svgRef.current.parentElement
     const W = container.clientWidth || 900
-    const H = Math.min(560, W * 0.62)
-    const margin = { top: 72, right: 32, bottom: 64, left: 70 }
+    const isMobile = W < 640
+    const H = isMobile ? Math.min(520, W * 1.02) : Math.min(560, W * 0.62)
+    const margin = isMobile
+      ? { top: 58, right: 14, bottom: 56, left: 42 }
+      : { top: 72, right: 32, bottom: 64, left: 70 }
     const w = W - margin.left - margin.right
     const h = H - margin.top - margin.bottom
 
@@ -89,7 +93,7 @@ export default function ScatterDesviacion() {
     const negatives = rows.filter(d => d.desviacion === 'negativa').length
     const expected = rows.filter(d => d.desviacion === 'esperada').length
 
-    const header = g.append('g').attr('transform', 'translate(0,-48)')
+    const header = g.append('g').attr('transform', `translate(0,${isMobile ? -34 : -48})`)
     const summary = [
       { label: 'Resisten más', value: positives, color: '#7ea357' },
       { label: 'Esperadas', value: expected, color: 'rgba(245,237,224,0.55)' },
@@ -97,7 +101,7 @@ export default function ScatterDesviacion() {
     ]
 
     summary.forEach((item, i) => {
-      const x = i * 120
+      const x = isMobile ? i * 92 : i * 120
       header.append('circle')
         .attr('cx', x + 6)
         .attr('cy', 4)
@@ -107,7 +111,7 @@ export default function ScatterDesviacion() {
         .attr('x', x + 18)
         .attr('y', 0)
         .attr('font-family', CHART_LABEL)
-        .attr('font-size', '11px')
+        .attr('font-size', isMobile ? '9px' : '11px')
         .attr('letter-spacing', '0.08em')
         .attr('fill', 'rgba(245,237,224,0.72)')
         .text(`${item.value} ${item.label}`)
@@ -118,35 +122,35 @@ export default function ScatterDesviacion() {
       .attr('y', 0)
       .attr('text-anchor', 'end')
       .attr('font-family', CHART_LABEL)
-      .attr('font-size', '11px')
+      .attr('font-size', isMobile ? '9px' : '11px')
       .attr('letter-spacing', '0.08em')
       .attr('fill', 'rgba(232,160,122,0.74)')
-      .text('Señal sugerente, no concluyente')
+      .text(isMobile ? 'Señal sugerente' : 'Señal sugerente, no concluyente')
 
     // Axes
     g.append('g').attr('transform', `translate(0,${h})`)
       .call(d3.axisBottom(xScale).ticks(6).tickFormat(d => `${d}%`))
-      .selectAll('text').attr('fill', 'rgba(245,237,224,0.48)').attr('font-size', '10.5px').attr('font-family', CHART_FONT)
+      .selectAll('text').attr('fill', 'rgba(245,237,224,0.48)').attr('font-size', isMobile ? '9.5px' : '10.5px').attr('font-family', CHART_FONT)
 
     g.append('g')
       .call(d3.axisLeft(yScale).ticks(6))
-      .selectAll('text').attr('fill', 'rgba(245,237,224,0.48)').attr('font-size', '10.5px').attr('font-family', CHART_FONT)
+      .selectAll('text').attr('fill', 'rgba(245,237,224,0.48)').attr('font-size', isMobile ? '9.5px' : '10.5px').attr('font-family', CHART_FONT)
 
     // Axis labels
     g.append('text')
-      .attr('x', w / 2).attr('y', h + 46)
+      .attr('x', w / 2).attr('y', h + (isMobile ? 40 : 46))
       .attr('text-anchor', 'middle')
-      .attr('fill', 'rgba(245,237,224,0.4)').attr('font-size', '10.5px').attr('font-family', CHART_LABEL)
+      .attr('fill', 'rgba(245,237,224,0.4)').attr('font-size', isMobile ? '9px' : '10.5px').attr('font-family', CHART_LABEL)
       .attr('letter-spacing', '0.12em')
-      .text('% HOGARES CON NBI (NECESIDADES BÁSICAS INSATISFECHAS)')
+      .text(isMobile ? '% HOGARES CON NBI' : '% HOGARES CON NBI (NECESIDADES BÁSICAS INSATISFECHAS)')
 
     g.append('text')
       .attr('transform', 'rotate(-90)')
-      .attr('x', -h / 2).attr('y', -50)
+      .attr('x', -h / 2).attr('y', isMobile ? -30 : -50)
       .attr('text-anchor', 'middle')
-      .attr('fill', 'rgba(245,237,224,0.4)').attr('font-size', '10.5px').attr('font-family', CHART_LABEL)
+      .attr('fill', 'rgba(245,237,224,0.4)').attr('font-size', isMobile ? '9px' : '10.5px').attr('font-family', CHART_LABEL)
       .attr('letter-spacing', '0.12em')
-      .text('MORTALIDAD ACUMULADA 2019-2024 (POR 100.000 HAB.)')
+      .text(isMobile ? 'MORTALIDAD ACUM. / 100K' : 'MORTALIDAD ACUMULADA 2019-2024 (POR 100.000 HAB.)')
 
     // Regression line
     const xSorted = rows.map(d => d.nbi).sort(d3.ascending)
@@ -187,7 +191,7 @@ export default function ScatterDesviacion() {
       const cx = xScale(d.nbi)
       const cy = yScale(d.tasa)
       const color = colorMap[d.desviacion]
-      const isLabeled = LABEL_ALWAYS.includes(d.provincia)
+      const isLabeled = (isMobile ? LABEL_ALWAYS_MOBILE : LABEL_ALWAYS).includes(d.provincia)
 
       if (d.desviacion !== 'esperada') {
         dotsG.append('circle')
@@ -220,7 +224,7 @@ export default function ScatterDesviacion() {
           .attr('x', labelX)
           .attr('y', labelY)
           .attr('font-family', CHART_FONT)
-          .attr('font-size', '10px')
+          .attr('font-size', isMobile ? '8.5px' : '10px')
           .attr('font-weight', d.desviacion !== 'esperada' ? '600' : '400')
           .attr('fill', d.desviacion !== 'esperada' ? color : 'rgba(245,237,224,0.42)')
           .attr('opacity', 0)
